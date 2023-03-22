@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { SinhVien } from 'src/hocsinh.interface';
+import { updateGiaoVienDto } from 'src/dto/giaovien.dto';
+import { editSinhVienDto } from 'src/dto/sinhvien.dto';
 import { SinhVienService } from 'src/service/sinhvien.service';
 @Controller('sinhvien')
 export class SinhVienController {
@@ -20,13 +21,13 @@ export class SinhVienController {
 
   // thêm 1 sinh viên
   @Post('add')
-  themSinhVien(@Body() themSinhVien: SinhVien) {
+  themSinhVien(@Body() themSinhVien: updateGiaoVienDto) {
     return this.sinhVienService.themSinhVien(themSinhVien)
   }
 
   // sửa thông tin về sinh vien này
   @Put('edit/:id')
-  suaThonTinGiaoVien(@Param('id') id: number, @Body() sinhVien: SinhVien) {
+  suaThonTinGiaoVien(@Param('id') id: number, @Body() sinhVien: editSinhVienDto) {
     return this.sinhVienService.suaThongTinSinhVien(id, sinhVien)
   }
 

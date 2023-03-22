@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { GiaoVien } from 'src/giaovien.interface';
+import { editGiaoVienDto, updateGiaoVienDto } from 'src/dto/giaovien.dto';
 import { GiaovienService } from 'src/service/giaovien.service';
 
 @Controller('giaovien')
@@ -22,14 +22,14 @@ export class GiaovienController {
 
     // thêm 1 giáo viên
     @Post('add')
-    themGiaoVien(@Body() giaoVien: { name: string, age: number }) {
-        return this.giaoVienService.themGiaoVien(giaoVien)
+    themGiaoVien(@Body() giaoVienDto: updateGiaoVienDto) {
+        return this.giaoVienService.themGiaoVien(giaoVienDto)
     }
 
     // sửa thông tin về giáo viên này
     @Put('edit/:id')
-    suaThonTinGiaoVien(@Param('id') id: number, @Body() giaoVien: GiaoVien) {
-        return this.giaoVienService.suaThongTinGiaoVien(id, giaoVien)
+    suaThonTinGiaoVien(@Param('id') id: number, @Body() giaoVienDto: editGiaoVienDto) {
+        return this.giaoVienService.suaThongTinGiaoVien(id, giaoVienDto)
     }
 
     // xóa toàn bộ giáo viên

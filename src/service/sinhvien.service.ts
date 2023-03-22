@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { dataSinhVien } from 'src/data_sinhvien';
+import { editSinhVienDto, updateSinhVienDto } from 'src/dto/sinhvien.dto';
 import { SinhVien } from 'src/hocsinh.interface';
 
 @Injectable()
@@ -30,7 +31,7 @@ export class SinhVienService {
   }
 
   // thêm 1 sinh viên
-  themSinhVien(sinhvien) {
+  themSinhVien(sinhvien: updateSinhVienDto) {
     const obj_sinhvien: SinhVien = {
       id: this.sinhvien.length + 1,
       ...sinhvien
@@ -46,14 +47,23 @@ export class SinhVienService {
   }
 
   // sửa thông tin sinh viên
-  suaThongTinSinhVien(paramId, bodySinhVien) {
+  suaThongTinSinhVien(paramId, bodySinhVien: editSinhVienDto) {
     const found = this.sinhvien.findIndex((idSinhVien: SinhVien) => idSinhVien.id == paramId);
 
     // nếu tìm thấy
     if (found != -1) {
-      this.sinhvien[paramId - 1].id = Number(paramId)
-      this.sinhvien[paramId - 1].name = bodySinhVien.name
-      this.sinhvien[paramId - 1].age = Number(bodySinhVien.age)
+
+      const obj_sinhvien = {
+        id: Number(paramId),
+        ...bodySinhVien
+      }
+
+      this.sinhvien[paramId - 1] = obj_sinhvien
+
+      // convert string to interger
+      obj_sinhvien.age = Number(obj_sinhvien.age)
+
+
       console.log(this.sinhvien)
       return `đã cập nhật sinh viên với id = ${paramId}`
     }

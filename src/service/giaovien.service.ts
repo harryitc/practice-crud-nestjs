@@ -33,10 +33,18 @@ export class GiaovienService {
 
         // nếu tìm thấy
         if (found != -1) {
-            this.giaovien[paramId - 1].id = Number(paramId)
-            this.giaovien[paramId - 1].name = bodyGiaoVien.name
-            this.giaovien[paramId - 1].age = Number(bodyGiaoVien.age)
-            this.giaovien[paramId - 1].giangDay = bodyGiaoVien.giangDay
+
+            const obj_giaovien = {
+                id: Number(paramId),
+                ...bodyGiaoVien
+            }
+
+            this.giaovien[paramId - 1] = obj_giaovien
+
+            // convert string to interger
+            obj_giaovien.age = Number(obj_giaovien.age)
+
+
             console.log(this.giaovien)
             return `đã cập nhật giáo viên với id = ${paramId}`
         }

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { GiaoVien } from "./giaovien";
+import { GiaoVien } from "./giaovien.interface";
 
 export const dataGiaoVien: GiaoVien[] = [
     {

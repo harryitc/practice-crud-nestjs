@@ -1,4 +1,4 @@
-import { SinhVien } from './hocsinh';
+import { SinhVien } from './hocsinh.interface';
 
 export const dataSinhVien: SinhVien[] = [
   {

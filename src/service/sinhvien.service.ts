@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { dataSinhVien } from 'src/data_sinhvien';
-import { SinhVien } from 'src/hocsinh';
+import { SinhVien } from 'src/hocsinh.interface';
 
 @Injectable()
 export class SinhVienService {
@@ -31,9 +31,34 @@ export class SinhVienService {
 
   // thêm 1 sinh viên
   themSinhVien(sinhvien) {
-    this.sinhvien.push(sinhvien)
-    console.log(this.sinhvien);
-    return `đã thêm thông tin sinh viên có tên: ${sinhvien.name}`
+    const obj_sinhvien: SinhVien = {
+      id: this.sinhvien.length + 1,
+      ...sinhvien
+    }
+
+    // convert string to interger
+    obj_sinhvien.age = Number(obj_sinhvien.age)
+
+    // them vao danh sach
+    this.sinhvien.push(obj_sinhvien)
+
+    return obj_sinhvien
+  }
+
+  // sửa thông tin sinh viên
+  suaThongTinSinhVien(paramId, bodySinhVien) {
+    const found = this.sinhvien.findIndex((idSinhVien: SinhVien) => idSinhVien.id == paramId);
+
+    // nếu tìm thấy
+    if (found != -1) {
+      this.sinhvien[paramId - 1].id = Number(paramId)
+      this.sinhvien[paramId - 1].name = bodySinhVien.name
+      this.sinhvien[paramId - 1].age = Number(bodySinhVien.age)
+      console.log(this.sinhvien)
+      return `đã cập nhật sinh viên với id = ${paramId}`
+    }
+
+    return 'Lỗi! Không tìm thấy id giáo viên này'
   }
 
   // xóa toàn bộ sinh viên

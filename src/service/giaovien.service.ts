@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { dataGiaoVien } from 'src/data_giaovien';
-import { GiaoVien } from 'src/giaovien';
+import { GiaoVien } from 'src/giaovien.interface';
 
 @Injectable()
 export class GiaovienService {
@@ -27,6 +27,23 @@ export class GiaovienService {
         return this.giaovien[id - 1];
     }
 
+    // sửa thông tin giáo viên
+    suaThongTinGiaoVien(paramId, bodyGiaoVien) {
+        const found = this.giaovien.findIndex((idGiaoVien: GiaoVien) => idGiaoVien.id == paramId);
+
+        // nếu tìm thấy
+        if (found != -1) {
+            this.giaovien[paramId - 1].id = Number(paramId)
+            this.giaovien[paramId - 1].name = bodyGiaoVien.name
+            this.giaovien[paramId - 1].age = Number(bodyGiaoVien.age)
+            this.giaovien[paramId - 1].giangDay = bodyGiaoVien.giangDay
+            console.log(this.giaovien)
+            return `đã cập nhật giáo viên với id = ${paramId}`
+        }
+
+        return 'Lỗi! Không tìm thấy id giáo viên này'
+    }
+
     // xóa toàn bộ danh sách giáo viên
     xoaDanhSachGiaoVien() {
         this.giaovien = []
@@ -36,8 +53,18 @@ export class GiaovienService {
 
     // thêm 1 giáo viên
     themGiaoVien(giaovien) {
-        this.giaovien.push(giaovien)
-        return giaovien
+        const obj_giaovien: GiaoVien = {
+            id: this.giaovien.length + 1,
+            ...giaovien
+        }
+
+        // convert string to interger
+        obj_giaovien.age = Number(obj_giaovien.age)
+
+        // them vao danh sach
+        this.giaovien.push(obj_giaovien)
+
+        return obj_giaovien
     }
 
     // xóa 1 giáo viên nào đó{

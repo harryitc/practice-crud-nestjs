@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { updateGiaoVienDto } from 'src/dto/giaovien.dto';
 import { editSinhVienDto } from 'src/dto/sinhvien.dto';
 import { SinhVienService } from 'src/service/sinhvien.service';

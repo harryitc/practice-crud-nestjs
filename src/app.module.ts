@@ -6,8 +6,31 @@ import { SinhVienController } from './controller/sinhvien.controller';
 import { SinhVienService } from './service/sinhvien.service';
 import { GiaovienController } from './controller/giaovien.controller';
 import { GiaovienService } from './service/giaovien.service';
+import { TruongHocModule } from './database/truonghoc.module';
+// import { TypeOrmModule} from '@nest'
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TruongHocEntity } from './database/entity/truonghoc.entity';
+
 @Module({
-  imports: [],
+  imports: [TruongHocModule],
+  // imports: [TypeOrmModule.forRoot({
+  //   type: 'mssql',
+  //   host: '192.168.0.107',
+  //   port: 1433,
+  //   username: 'harryitc',
+  //   password: 'hitc',
+  //   entities: [TruongHocEntity],
+  //   database: 'TruongHoc',
+  //   synchronize: false,
+  //   pool: {
+  //     max: 10,
+  //     min: 0,
+  //     idleTimeoutMillis: 30000
+  //   },
+  //   options: {
+  //     encrypt: false,
+  //   }
+  // })],
   controllers: [AppController, SinhVienController, GiaovienController],
   providers: [AppService, SinhVienService, GiaovienService],
 })

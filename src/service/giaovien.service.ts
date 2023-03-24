@@ -81,6 +81,8 @@ export class GiaovienService {
         // Tìm xem trong danh sách có id này không?
         const found = this.giaovien.findIndex((idgiaovien: GiaoVien) => idgiaovien.id == id)
 
+        const thongTinGiaoVienTruocKhiXoa = this.giaovien[found]
+
         // Nếu không
         if (found == -1) {
             console.log(`Lỗi! không tìm thấy id này`);
@@ -99,7 +101,7 @@ export class GiaovienService {
         this.giaovien.length--;
 
         console.log('Danh sách hiện tại: ', this.giaovien);
-        return `đã xóa thông tin sinh viên: `
+        return `đã xóa thông tin giáo viên: ${JSON.stringify(thongTinGiaoVienTruocKhiXoa)}`
     }
 }
 

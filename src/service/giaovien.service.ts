@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { dataGiaoVien } from 'src/data_giaovien';
 import { GiaoVien } from 'src/giaovien.interface';
 
@@ -20,7 +20,7 @@ export class GiaovienService {
 
         // Nếu không
         if (found == -1) {
-            return `Lỗi! không tìm thấy id này`
+            throw new HttpException('Lỗi! Không tìm thấy id giáo viên này.', HttpStatus.NOT_FOUND);
         }
 
         // Nếu có
@@ -49,7 +49,7 @@ export class GiaovienService {
             return `đã cập nhật giáo viên với id = ${paramId}`
         }
 
-        return 'Lỗi! Không tìm thấy id giáo viên này'
+        throw new HttpException('Lỗi! Không tìm thấy id giáo viên này.', HttpStatus.NOT_FOUND);
     }
 
     // xóa toàn bộ danh sách giáo viên
@@ -85,8 +85,7 @@ export class GiaovienService {
 
         // Nếu không
         if (found == -1) {
-            console.log(`Lỗi! không tìm thấy id này`);
-            return `Lỗi! không tìm thấy id này`
+            throw new HttpException('Lỗi! Không tìm thấy id này.', HttpStatus.NOT_FOUND);
         }
 
         // Nếu có -> xóa id 
@@ -100,7 +99,6 @@ export class GiaovienService {
         // trừ kích thước đi 1 sau khi xóa 1 danh sách
         this.giaovien.length--;
 
-        console.log('Danh sách hiện tại: ', this.giaovien);
         return `đã xóa thông tin giáo viên: ${JSON.stringify(thongTinGiaoVienTruocKhiXoa)}`
     }
 }

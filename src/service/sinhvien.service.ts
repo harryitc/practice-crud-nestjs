@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { dataSinhVien } from 'src/data_sinhvien';
 import { editSinhVienDto, updateSinhVienDto } from 'src/dto/sinhvien.dto';
 import { SinhVien } from 'src/hocsinh.interface';
@@ -23,7 +23,7 @@ export class SinhVienService {
 
     // Nếu không
     if (found == -1) {
-      return `Lỗi! không tìm thấy id này`
+      throw new HttpException('Lỗi! Không tìm thấy id sinh viên này', HttpStatus.NOT_FOUND);
     }
 
     // nếu có
@@ -68,7 +68,7 @@ export class SinhVienService {
       return `đã cập nhật sinh viên với id = ${paramId}`
     }
 
-    return 'Lỗi! Không tìm thấy id giáo viên này'
+    throw new HttpException('Lỗi! Không tìm thấy id sinh viên này.', HttpStatus.NOT_FOUND);
   }
 
   // xóa toàn bộ sinh viên
@@ -89,8 +89,7 @@ export class SinhVienService {
 
     // Nếu không
     if (found == -1) {
-      console.log(`Lỗi! không tìm thấy id này`);
-      return `Lỗi! không tìm thấy id này`
+      throw new HttpException('Lỗi! Không tìm thấy id sinh viên này.', HttpStatus.NOT_FOUND);
     }
 
     // Nếu có -> xóa id 
@@ -103,8 +102,6 @@ export class SinhVienService {
 
     // trừ kích thước đi 1 sau khi xóa 1 danh sách
     this.sinhvien.length--;
-
-    console.log('Danh sách hiện tại: ', this.sinhvien);
     return `đã xóa thông tin sinh viên: ${thongTinSinhVienTruongKhiXoa}`
   }
 

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { editGiaoVienDto, updateGiaoVienDto } from 'src/dto/giaovien.dto';
 import { GiaovienService } from 'src/service/giaovien.service';
 
@@ -16,7 +16,7 @@ export class GiaovienController {
 
     // lấy thông tin của 1 giáo viên
     @Get(':id')
-    layThongTinGiaoVien(@Param('id') id: number) {
+    layThongTinGiaoVien(@Param('id', ParseIntPipe) id: number) {
         return this.giaoVienService.layThongTinGiaoVien(id)
     }
 
@@ -28,7 +28,7 @@ export class GiaovienController {
 
     // sửa thông tin về giáo viên này
     @Put('edit/:id')
-    suaThonTinGiaoVien(@Param('id') id: number, @Body() giaoVienDto: editGiaoVienDto) {
+    suaThonTinGiaoVien(@Param('id', ParseIntPipe) id: number, @Body() giaoVienDto: editGiaoVienDto) {
         return this.giaoVienService.suaThongTinGiaoVien(id, giaoVienDto)
     }
 
@@ -40,7 +40,7 @@ export class GiaovienController {
 
     // xóa 1 giáo viên
     @Delete('delete/:id')
-    xoaThongTinGiaoVien(@Param('id') id: number) {
+    xoaThongTinGiaoVien(@Param('id', ParseIntPipe) id: number) {
         return this.giaoVienService.xoaThongTinGiaoVien(id)
     }
 

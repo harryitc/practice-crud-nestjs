@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { updateGiaoVienDto } from 'src/dto/giaovien.dto';
 import { editSinhVienDto } from 'src/dto/sinhvien.dto';
 import { SinhVienService } from 'src/service/sinhvien.service';
@@ -15,7 +15,7 @@ export class SinhVienController {
 
   // lấy 1 thông tin học sinh
   @Get(':id')
-  getThongTinSinhVien(@Param('id') id: number) {
+  getThongTinSinhVien(@Param('id', ParseIntPipe) id: number) {
     return this.sinhVienService.getThongTinSinhVien(id)
   }
 
@@ -27,7 +27,7 @@ export class SinhVienController {
 
   // sửa thông tin về sinh vien này
   @Put('edit/:id')
-  suaThonTinGiaoVien(@Param('id') id: number, @Body() sinhVien: editSinhVienDto) {
+  suaThonTinGiaoVien(@Param('id', ParseIntPipe) id: number, @Body() sinhVien: editSinhVienDto) {
     return this.sinhVienService.suaThongTinSinhVien(id, sinhVien)
   }
 
@@ -39,7 +39,7 @@ export class SinhVienController {
 
   // xóa thông tin 1 sinh viên
   @Delete('delete/:id')
-  xoaThongTinSinhVien(@Param('id') id: number) {
+  xoaThongTinSinhVien(@Param('id', ParseIntPipe) id: number) {
     return this.sinhVienService.xoaThongTinSinhVien(id)
   }
 }
